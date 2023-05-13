@@ -29,7 +29,9 @@
       crystalTexture.mapping = THREE.CubeRefractionMapping;
 
       crystalMaterial.envMap = crystalTexture;
-      crystalMaterial.refractionRatio = 0.992;
+      // If refractionRatio is higher than this, it's really hard to spot
+      // the crystals in the phone screen.
+      crystalMaterial.refractionRatio = 0.98;
 
       var crystals = [];
 
