@@ -8,7 +8,7 @@
 </head>
 <body>
    <script>
-      // Phone should be in ladnscape mode with the top pointing to the right
+      // Phone should be in landscape mode with the top pointing to the right
       // before the app is loaded in. Automatic orientation should be turned off
       // or at least be careful not to trigger the preorientation, since it will
       // mess things up.
@@ -22,13 +22,14 @@
          'posy.jpg', 'negy.jpg',
          'posz.jpg', 'negz.jpg' ]);
 
-      var crystalGeometry = new THREE.IcosahedronGeometry( 1 );
+      var crystalGeometry = new THREE.IcosahedronGeometry(10);
       var crystalMaterial = new THREE.MeshBasicMaterial();
 
       var crystalTexture = scene.background.clone();
       crystalTexture.mapping = THREE.CubeRefractionMapping;
 
       crystalMaterial.envMap = crystalTexture;
+
       // If refractionRatio is higher than this, it's really hard to spot
       // the crystals in the phone screen.
       crystalMaterial.refractionRatio = 0.97;
@@ -36,13 +37,12 @@
       var crystals = [];
 
       for (var i = 0; i < 300; i++) {
-         crystal = new THREE.Mesh( crystalGeometry, crystalMaterial );
+         var crystal = new THREE.Mesh(crystalGeometry, crystalMaterial);
          crystals.push(crystal);
       }
 
       for (var i = 0; i < 300; i++) {
-         scene.add(crystals[i]);
-         crystals[i].scale.set(10, 10, 10);
+         scene.add(crystals[i])
 
          var radius = THREE.MathUtils.randFloat(50, 600);
          var tita = THREE.MathUtils.randFloat(0, Math.PI * 2);
