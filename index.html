@@ -1,1 +1,81 @@
-Hello world
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <title>Crystal invaders</title>
+
+   <script src="three.min.js"></script>
+   <script src="vax.js"></script>
+</head>
+<body>
+   <script>
+      // Phone should be in ladnscape mode with the top pointing to the right
+      // before the app is loaded in. Automatic orientation should be turned off
+      // or at least be careful not to trigger the preorientation, since it will
+      // mess things up.
+      vaxInit();
+
+      camera.position.set(0, 0, 0);
+      camera.fov = 70;
+
+      scene.background = new THREE.CubeTextureLoader().load( [
+         'posx.jpg', 'negx.jpg',
+         'posy.jpg', 'negy.jpg',
+         'posz.jpg', 'negz.jpg' ]);
+
+      var crystalGeometry = new THREE.DodecahedronGeometry( 1 );
+      var crystalMaterial = new THREE.MeshBasicMaterial();
+
+      var crystalTexture = scene.background.clone();
+      crystalTexture.mapping = THREE.CubeRefractionMapping;
+
+      crystalMaterial.envMap = crystalTexture;
+      crystalMaterial.refractionRatio = 0.99;
+
+      var crystals = [];
+
+      for (var i = 0; i < 300; i++) {
+         crystal = new THREE.Mesh( crystalGeometry, crystalMaterial );
+         crystals.push(crystal);
+      }
+
+      for (var i = 0; i < 300; i++) {
+         scene.add(crystals[i]);
+         crystals[i].scale.set(10, 10, 10);
+
+         var radius = THREE.MathUtils.randFloat(50, 600);
+         var tita = THREE.MathUtils.randFloat(0, Math.PI * 2);
+         var phi = THREE.MathUtils.randFloat(0, Math.PI * 2);
+
+         crystals[i].position.setFromSphericalCoords(radius, tita, phi);
+      }
+
+      function animate( t ){
+         for (var i = 0; i < 300; i++) {
+            crystals[i].rotation.y = t/10;
+         }
+      }
+
+      function deviceOrientation(event) {
+         var alpha = event.alpha;
+         var gamma = event.gamma;
+
+         if( alpha === null ) return;
+
+         if( gamma >= 0 ) {
+            gamma = 90 - gamma;
+         }
+         else {
+            alpha = alpha + 180;
+            gamma = -90 - gamma;
+         }
+
+         alpha = THREE.MathUtils.degToRad( alpha );
+         gamma = THREE.MathUtils.degToRad( -gamma );
+
+         camera.rotation.set( gamma, alpha, 0, 'YXZ' );
+      }
+
+      window.addEventListener('deviceorientation', deviceOrientation, true);
+   </script>
+</body>
+</html>
