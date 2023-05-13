@@ -22,14 +22,14 @@
          'posy.jpg', 'negy.jpg',
          'posz.jpg', 'negz.jpg' ]);
 
-      var crystalGeometry = new THREE.DodecahedronGeometry( 1 );
+      var crystalGeometry = new THREE.IcosahedronGeometry( 1 );
       var crystalMaterial = new THREE.MeshBasicMaterial();
 
       var crystalTexture = scene.background.clone();
       crystalTexture.mapping = THREE.CubeRefractionMapping;
 
       crystalMaterial.envMap = crystalTexture;
-      crystalMaterial.refractionRatio = 0.99;
+      crystalMaterial.refractionRatio = 0.992;
 
       var crystals = [];
 
