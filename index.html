@@ -31,7 +31,7 @@
       crystalMaterial.envMap = crystalTexture;
       // If refractionRatio is higher than this, it's really hard to spot
       // the crystals in the phone screen.
-      crystalMaterial.refractionRatio = 0.98;
+      crystalMaterial.refractionRatio = 0.97;
 
       var crystals = [];
 
@@ -61,9 +61,9 @@
          var alpha = event.alpha;
          var gamma = event.gamma;
 
-         if( alpha === null ) return;
+         if (alpha === null) return;
 
-         if( gamma >= 0 ) {
+         if (gamma >= 0) {
             gamma = 90 - gamma;
          }
          else {
